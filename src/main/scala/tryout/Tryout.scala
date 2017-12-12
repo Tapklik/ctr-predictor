@@ -63,6 +63,7 @@ object Tryout {
           .master("local[6]")
           .getOrCreate()
 
+        /*
         val trainpath = "/home/ivica/tapklik/realrun/train"
         val testpath = "/home/ivica/tapklik/realrun/test"
 
@@ -78,7 +79,7 @@ object Tryout {
         val trainingData = Data.readData(trainpath, spark, Schemas.rawTrainingData)
         val testingData = Data.readData(testpath, spark, Schemas.rawTrainingData)
 
-        /*
+
         val someData = Seq(
             Row("2194394749304968771", "0", "14102200", "1005", "0", "1fbe01fe", "f3845767", "28905ebd", "ecad2386", "7801e8d9", "07d7df22", "a99f214a", "75710ded", "8a4875bd", "1", "0", "21762", "320", "50", "2502", "0", "35", "-1", "221"),
             Row("11689392121214183238", "0", "14103010", "1005", "0", "1fbe01fe", "f3845767", "28905ebd", "ecad2386", "7801e8d9", "07d7df22", "a99f214a", "c946e26a", "7abbbd5c", "1", "0", "22815", "320", "50", "2647", "2", "39", "100148", "23"),
@@ -96,14 +97,20 @@ object Tryout {
             Row("4361023032757015145", "14102417", "1005", "0", "85f751fd", "c4e18dd6", "50e219e0", "92f5800b", "ae637522", "0f2161f8", "a99f214a", "85804f8f", "981edffc", "1", "3", "21191", "320", "50", "2424", "1", "161", "100189", "71")
         )
         var testingdata = sqlContext.createDataFrame(sc.parallelize(someData2), StructType(Schemas.rawTestingData))
-        */
+
 
         var feTrainingData = FE.feProcess(trainingData, spark)
         var feTestingData = FE.feProcess(testingData, spark)
+        */
 
         val dctnry = new Dictionary(spark, sc)
-        dctnry.load("/home/ivica/tapklik/dict/fe-test-dict-full/dict.csv")
+        dctnry.load(Paths.dictPath)
         var mapa = dctnry.getDict()
+
+        mapa.foreach(println)
+
+
+        /*
 
         val mappedTrainingData = new MapProcess(feTrainingData, feTrainingColumns, mapa, true, spark)
         val mappedTestingData = new MapProcess(feTestingData, feTrainingColumns, mapa, true, spark)
@@ -115,7 +122,6 @@ object Tryout {
         var resultDF = mdl.transform(mappedTestingData.processedData)
 
         val metrics = new Metrics(mdl, resultDF, spark)
-        /*
         data2.printSchema()
         data2.show()
         val dctnry = new Dictionary(spark, sc)

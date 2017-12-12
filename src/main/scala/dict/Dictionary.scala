@@ -5,6 +5,7 @@ import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.functions._
 
+import scala.collection.mutable
 import scala.io.Source
 
 
@@ -48,15 +49,8 @@ class Dictionary(spark: SparkSession, sc: SparkContext) extends Serializable {
     }
 
     def load(path: String): Unit = {
-        for (line <- Source.fromFile(path).getLines) {
-            var key = line.toString.slice(0, line.indexOf(","))
-            var value = line.toString.slice(line.indexOf(",") + 1, line.length)
-
-            if(!dictionary.exists(_ == key -> value)){
-                dictionary += (key -> value)
-            }
-
-        }
+        val rawMap = spark.read.format("com.databricks.spark.csv").load(path).cache()
+        dictionary = rawMap.rdd.map(row => (row(0).asInstanceOf[String], row(1).asInstanceOf[String])).collectAsMap().toMap
     }
 
     def save(path: String): Unit = {
