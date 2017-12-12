@@ -1,6 +1,6 @@
 package ctr
 
-import data.{Data, Schemas}
+import data.Data
 import dict.Dictionary
 import fe.FE
 import map.MapProcess
@@ -8,6 +8,7 @@ import metrics.Metrics
 import org.apache.spark.ml.classification.LogisticRegression
 import org.apache.spark.sql._
 import org.apache.spark.{SparkConf, SparkContext}
+import core._
 
 object CTR {
 
@@ -28,17 +29,12 @@ object CTR {
           .master("local[6]")
           .getOrCreate()
 
-        val trainpath = "/home/ivica/tapklik/test/5milli"
-        val testpath = "/home/ivica/tapklik/test/1milli"
+        val trainpath = Paths.trainingData
+        val testpath = Paths.testingData
 
-        val trainingColumns = Array("click", "banner_pos", "site_id", "site_domain", "site_category", "app_domain", "app_category", "device_model", "device_type",
-            "device_conn_type", "C1", "C14", "C15", "C16", "C17", "C18", "C19", "C20", "C21")
+        val trainingColumns = Columns.training
 
-        val feTrainingColumns = Array("click", "banner_pos", "site_id", "site_domain", "site_category", "app_domain", "app_category", "device_model", "device_type",
-            "device_conn_type", "C1", "C14", "C15", "C16", "C17", "C18", "C19", "C20", "C21", "dimensions", "banner_pos_dimensions")
-
-        val testingColumns = Array("banner_pos", "site_id", "site_domain", "site_category", "app_domain", "app_category", "device_model", "device_type",
-            "device_conn_type", "C1", "C14", "C15", "C16", "C17", "C18", "C19", "C20", "C21")
+        val testingColumns = Columns.testing
 
         val trainingData = Data.readData(trainpath, spark, Schemas.rawTrainingData)
         val testingData = Data.readData(testpath, spark, Schemas.rawTrainingData)
@@ -47,11 +43,11 @@ object CTR {
         var feTestingData = FE.feProcess(testingData, spark)
 
         val dctnry = new Dictionary(spark, sc)
-        dctnry.load("/home/ivica/tapklik/dict/fe-test-dict-full/dict.csv")
+        dctnry.load(Paths.dictPath)
         var mapa = dctnry.getDict()
 
-        val mappedTrainingData = new MapProcess(feTrainingData, feTrainingColumns, mapa, true, spark)
-        val mappedTestingData = new MapProcess(feTestingData, feTrainingColumns, mapa, true, spark)
+        val mappedTrainingData = new MapProcess(feTrainingData, trainingColumns, mapa, true, spark)
+        val mappedTestingData = new MapProcess(feTestingData, trainingColumns, mapa, true, spark)
 
         val mdl = new LogisticRegression().fit(mappedTrainingData.processedData)
         var resultDF = mdl.transform(mappedTestingData.processedData)

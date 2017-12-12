@@ -1,6 +1,6 @@
 package tryout
 
-import data.{Data, Schemas}
+import data.Data
 import dict.Dictionary
 import fe.FE
 import map.MapProcess
@@ -14,9 +14,8 @@ import org.apache.spark.sql.catalyst.encoders.RowEncoder
 import org.apache.spark.sql.streaming.StreamingQuery
 import org.apache.spark.sql.types._
 import org.apache.spark.{SparkConf, SparkContext}
-import other.Load.encodedSchema
-import org.apache.spark.sql.functions.col
-import org.dmg.pmml.False
+import core._
+
 
 object Tryout {
 

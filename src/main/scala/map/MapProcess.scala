@@ -1,6 +1,6 @@
 package map
 
-import data.{Data, Schemas}
+import data.Data
 import dict.Dictionary
 import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.{SparkConf, SparkContext}
@@ -10,6 +10,7 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.ml.linalg.VectorUDT
 import org.apache.spark.mllib.linalg.VectorUDT
 import org.apache.spark.sql.types.StructType
+import core._
 
 
 class MapProcess (trData: DataFrame, columns: Array[String],
