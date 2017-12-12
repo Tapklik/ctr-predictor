@@ -25,7 +25,7 @@ object MakeDict {
           .master("local[6]")
           .getOrCreate()
 
-        val columns = Columns.training
+        val columns = Columns.map
 
         val data = Data.readData(Paths.data, spark, Schemas.rawTrainingData)
 

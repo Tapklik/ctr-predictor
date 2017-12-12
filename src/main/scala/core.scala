@@ -13,6 +13,11 @@ package object core {
     }
 
     object Columns {
+
+        val map = Array("banner_pos", "site_id", "site_domain", "site_category", "app_domain",
+            "app_category", "device_model", "device_type", "device_conn_type", "C1", "C14", "C15", "C16", "C17", "C18",
+            "C19", "C20", "C21", "dimensions", "banner_pos_dimensions")
+
         val training = Array("click", "banner_pos", "site_id", "site_domain", "site_category", "app_domain",
             "app_category", "device_model", "device_type", "device_conn_type", "C1", "C14", "C15", "C16", "C17", "C18",
             "C19", "C20", "C21", "dimensions", "banner_pos_dimensions")
