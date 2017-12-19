@@ -9,7 +9,11 @@ package object core {
 
         val testingData = "/home/ivica/tapklik/minirun/1milli"
 
-        val dictPath = "/home/ivica/tapklik/minirun/dict"
+        val dictPath = "/home/ivica/tapklik/minirun/dictTryout"
+
+        val npath = ""
+
+        val zpath = ""
     }
 
     object Columns {

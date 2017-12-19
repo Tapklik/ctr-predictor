@@ -107,7 +107,13 @@ object Tryout {
         dctnry.load(Paths.dictPath)
         var mapa = dctnry.getDict()
 
-        mapa.foreach(println)
+        val trainpath = Paths.trainingData
+        val trainingColumns = Columns.training
+        val trainingData = Data.readData(trainpath, spark, Schemas.rawTrainingData)
+        var feTrainingData = FE.feProcess(trainingData, spark)
+        val mappedTrainingData = new MapProcess(feTrainingData, trainingColumns, mapa, true, spark)
+
+        mappedTrainingData.mappedData.show()
 
 
         /*

@@ -20,7 +20,7 @@ class MapProcess (trData: DataFrame, columns: Array[String],
 
     private var features = spark.sqlContext.emptyDataFrame
 
-    private val mappedData = MapProcess.mapData(trData, columns, dict, withClick)
+    val mappedData = MapProcess.mapData(trData, columns, dict, withClick)
 
     val processedData: DataFrame = MapProcess.setFeatures(columns, mappedData, spark, withClick)
 
