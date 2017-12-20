@@ -1,4 +1,4 @@
-package ctr
+package app
 
 import core._
 import data.Data
@@ -32,7 +32,7 @@ object MakeDict {
         var feData = FE.feProcess(data, spark)
 
         val dctnry = new Dictionary(spark, sc)
-        dctnry.setDict(feData, columns)
+        dctnry.setDict2(feData, columns)
         dctnry.save(Paths.dictPath)
 
         sc.stop()

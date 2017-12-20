@@ -1,12 +1,13 @@
-package model
+package app
 
 import core.{Columns, Paths, Schemas}
 import data.Data
 import dict.Dictionary
 import fe.FE
 import map.MapProcess
-import org.apache.spark.{SparkConf, SparkContext}
+import model.Model
 import org.apache.spark.sql.{SQLContext, SparkSession}
+import org.apache.spark.{SparkConf, SparkContext}
 
 object RunModel {
 

@@ -1,20 +1,12 @@
-package tryout
+package app
 
+import core._
 import data.Data
 import dict.Dictionary
 import fe.FE
 import map.MapProcess
-import metrics.Metrics
-import org.apache.spark.ml.classification.{BinaryLogisticRegressionSummary, LogisticRegression}
-import org.apache.spark.ml.feature.VectorAssembler
-import org.apache.spark.mllib.linalg.VectorUDT
-import org.apache.spark.mllib.tree.model.DecisionTreeModel
 import org.apache.spark.sql._
-import org.apache.spark.sql.catalyst.encoders.RowEncoder
-import org.apache.spark.sql.streaming.StreamingQuery
-import org.apache.spark.sql.types._
 import org.apache.spark.{SparkConf, SparkContext}
-import core._
 
 
 object Tryout {

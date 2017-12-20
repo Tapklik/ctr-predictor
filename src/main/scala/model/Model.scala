@@ -6,12 +6,13 @@ import core.Paths
 import scala.io.Source
 
 
-class Model (modelSize: Int, loadable: Boolean, saveable: Boolean, trainingData: DataFrame, testingData: DataFrame, columns: Array[String]) extends Serializable {
+class Model (modelSize: Int, loadable: Boolean, saveable: Boolean, trainingData: DataFrame, testingData: DataFrame,
+             columns: Array[String]) extends Serializable {
 
     var n : Array[Double] = Array.fill[Double](modelSize)(0.0)
     var z : Array[Double] = Array.fill[Double](modelSize)(0.0)
     var w : Array[Double] = Array.fill[Double](modelSize)(0.0)
-    private var noOfRuns = 3
+    private var noOfRuns = 8
     private var count = testingData.count()
 
     if(loadable){
@@ -31,7 +32,22 @@ class Model (modelSize: Int, loadable: Boolean, saveable: Boolean, trainingData:
     var (logLossBase, tp, tn, fp, fn) = Model.testModel(testingData, columns, n, z, w)
 
     Model.getMetrics(tp, tn, fp, fn, logLossBase, count)
+}
 
+class LineModel (modelSize: Int, predictData: DataFrame) extends Serializable {
+
+    var n : Array[Double] = Model.loadModel(modelSize, Paths.npath)
+    var z : Array[Double] = Model.loadModel(modelSize, Paths.zpath)
+    var w : Array[Double] = Array.fill[Double](modelSize)(0.0)
+
+    predictData.collect().foreach{ row =>
+        var values = List[Int]()
+        List.range(0, row.length - 1).foreach { j =>
+            values ::= row(j).toString.toInt
+        }
+        var prediction = Model.predict(values, n, z, w)
+        println(prediction)
+    }
 
 }
 

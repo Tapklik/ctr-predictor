@@ -11,9 +11,9 @@ package object core {
 
         val dictPath = "/home/ivica/tapklik/minirun/dictTryout"
 
-        val npath = ""
+        val npath = "n.txt"
 
-        val zpath = ""
+        val zpath = "z.txt"
     }
 
     object Columns {
@@ -132,6 +132,29 @@ package object core {
 
         val feTrainingSchemaInt = StructType(Array(
             StructField("label", IntegerType, nullable = true),
+            StructField("banner_pos", IntegerType, nullable = true),
+            StructField("site_id", IntegerType, nullable = true),
+            StructField("site_domain", IntegerType, nullable = true),
+            StructField("site_category", IntegerType, nullable = true),
+            StructField("app_domain", IntegerType, nullable = true),
+            StructField("app_category", IntegerType, nullable = true),
+            StructField("device_model", IntegerType, nullable = true),
+            StructField("device_type", IntegerType, nullable = true),
+            StructField("device_conn_type", IntegerType, nullable = true),
+            StructField("C1", IntegerType, nullable = true),
+            StructField("C14", IntegerType, nullable = true),
+            StructField("C15", IntegerType, nullable = true),
+            StructField("C16", IntegerType, nullable = true),
+            StructField("C17", IntegerType, nullable = true),
+            StructField("C18", IntegerType, nullable = true),
+            StructField("C19", IntegerType, nullable = true),
+            StructField("C20", IntegerType, nullable = true),
+            StructField("C21", IntegerType, nullable = true),
+            StructField("dimensions", IntegerType, nullable = true),
+            StructField("banner_pos_dimensions", IntegerType, nullable = true)
+        ))
+
+        val feTestingSchemaInt = StructType(Array(
             StructField("banner_pos", IntegerType, nullable = true),
             StructField("site_id", IntegerType, nullable = true),
             StructField("site_domain", IntegerType, nullable = true),

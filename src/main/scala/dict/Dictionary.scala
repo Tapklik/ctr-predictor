@@ -15,6 +15,7 @@ case class dictRow(index: String, uid: String)
 class Dictionary(spark: SparkSession, sc: SparkContext) extends Serializable {
 
     private var dictionary: Map[String, String] = Map()
+    private var dictionary2: Map[String, Int] = Map()
 
     def setDict(data: DataFrame, columns: Array[String]): Unit = {
 
@@ -42,6 +43,18 @@ class Dictionary(spark: SparkSession, sc: SparkContext) extends Serializable {
           .collectAsMap()
 
         dictionary = tempDictionary.toMap
+    }
+
+    def setDict2(data: DataFrame, columns: Array[String]): Unit = {
+
+        var array = Array[String]()
+
+        for ((column, i) <- columns.zipWithIndex) {
+
+            array ++= data.select(column).distinct().rdd.map(r => i + "_" + r(0).toString).collect()
+        }
+
+        dictionary2 = array.zipWithIndex.toMap
     }
 
     def getDict(): Map[String, String] = {

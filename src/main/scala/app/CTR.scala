@@ -1,5 +1,6 @@
-package ctr
+package app
 
+import core._
 import data.Data
 import dict.Dictionary
 import fe.FE
@@ -8,7 +9,6 @@ import metrics.Metrics
 import org.apache.spark.ml.classification.LogisticRegression
 import org.apache.spark.sql._
 import org.apache.spark.{SparkConf, SparkContext}
-import core._
 
 object CTR {
 

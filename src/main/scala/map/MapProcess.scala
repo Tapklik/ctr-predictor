@@ -20,7 +20,7 @@ class MapProcess (trData: DataFrame, columns: Array[String],
 
     private var features = spark.sqlContext.emptyDataFrame
 
-    val mappedData = MapProcess.mapData(trData, columns, dict, withClick)
+    val mappedData: DataFrame = MapProcess.mapData(trData, columns, dict, withClick)
 
     val processedData: DataFrame = MapProcess.setFeatures(columns, mappedData, spark, withClick)
 
@@ -56,7 +56,7 @@ object MapProcess {
             } (encoder)
 
         } else {
-            var encoder = RowEncoder(Schemas.testingSchemaInt)
+            var encoder = RowEncoder(Schemas.feTestingSchemaInt)
             data.select(columns.toSeq.map(col): _*).map{row =>
                 var sumting = List[Int]()
                 row.toSeq.zipWithIndex.foreach { elem =>
